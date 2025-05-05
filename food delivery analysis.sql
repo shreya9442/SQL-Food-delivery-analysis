@@ -122,7 +122,7 @@ having count(*) = 1 and min(month(placed_at)) = 01 and min(year(placed_at)) = 20
 -- their every third order with a personalized communication and they have asked you to create a query for this.
 
 with cte as(
-select customer_code, order_id, placed_at, row_number() over(partition by customer_code order by placed_at) as rnk from orders)
+select customer_code, order_id, placed_at, row_number() over(partition by customer_code order by placed_at,order_id) as rnk from orders)
 
 select * from cte 
 where rnk % 3=0 ;
